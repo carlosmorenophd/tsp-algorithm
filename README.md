@@ -64,7 +64,7 @@ La eficacia del algoritmo Branch and Bound se basa en la calidad de los límites
 
 ## Ejecución
 
-![Multistage](asserts/dynamicProgramming.png)
+![Multistage](asserts/branchAndBound.png)
 
 ## Acerca del autor 
 Estuandite de Doctorado: Juan Carlos Moreno Sanchez
@@ -140,7 +140,7 @@ The effectiveness of the Branch and Bound algorithm relies on the quality of the
 
 ## Ejecución
 
-![Multistage](asserts/dynamicProgramming.png)
+![Multistage](asserts/branchAndBound.png)
 
 ## About the author
 Student of PhD: Juan Carlos Moreno Sanchez
