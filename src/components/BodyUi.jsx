@@ -28,6 +28,7 @@ const BodyUi = (props) => {
         [20, 25, 30, 0],
       ],
       result: [],
+      method: 2,
     },
   });
 
@@ -49,7 +50,7 @@ const BodyUi = (props) => {
         <Parameter
           id="method"
           label="Method"
-          list={[{ value: 1, text: "Dynamic Programming" }]}
+          list={[{ value: 1, text: "Dynamic Programming" }, { value: 2, text: "Branch and Bound" }]}
           value={method}
           onChange={handleChangeMethod}
         />

@@ -47,7 +47,62 @@ const useAlgorithm = () => {
     return path;
   };
 
+  const branchBound = (graph) => {
+    const result = branchBoundImplementation({ graph });
+    return result;
+  };
+
+  const branchBoundImplementation = ({ graph }) => {
+    const n = graph.length;
+    let minCost = Infinity;
+    let bestPath = [];
+  
+    function tspRecursive(currPath, currCost, visited, count, currVertex) {
+      console.log("Log ",currPath, currCost, visited, count, currVertex);
+      if (count === n && graph[currVertex][0] > 0) {
+        currCost += graph[currVertex][0];
+        if (currCost < minCost) {
+          minCost = currCost;
+          bestPath = currPath.slice();
+        }
+        return;
+      }
+  
+      for (let nextVertex = 0; nextVertex < n; nextVertex++) {
+        if (
+          !visited[nextVertex] &&
+          graph[currVertex][nextVertex] > 0 &&
+          currCost + graph[currVertex][nextVertex] < minCost
+        ) {
+          visited[nextVertex] = true;
+          currPath.push(nextVertex);
+  
+          tspRecursive(
+            currPath,
+            currCost + graph[currVertex][nextVertex],
+            visited,
+            count + 1,
+            nextVertex
+          );
+  
+          visited[nextVertex] = false;
+          currPath.pop();
+        }
+      }
+    }
+  
+    const initialPath = [0];
+    const initialCost = 0;
+    const visited = Array(n).fill(false);
+    visited[0] = true;
+  
+    tspRecursive(initialPath, initialCost, visited, 1, 0);
+  
+    return { cost: minCost, path: bestPath };
+  };
+
   return {
+    branchBound,
     dynamicProgramming,
   };
 };

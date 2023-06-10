@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useAlgorithm } from "../code/use-algorithm";
 
 const useBodyUi = ({ init }) => {
-  const { dynamicProgramming } = useAlgorithm();
+  const { dynamicProgramming, branchBound } = useAlgorithm();
   const [data, setData] = useState(init.data);
   const [alert, setAlert] = useState(false);
   const [result, setResult] = useState(init.result);
-  const [method, setMethod] = useState(1);
+  const [method, setMethod] = useState(init.method);
   const [tree, setTree] = useState({
     name: "Tree expansion",
     attributes: {
@@ -91,11 +91,10 @@ const useBodyUi = ({ init }) => {
     if (method === 1) {
       const dynamicResult = dynamicProgramming(data);
       setResult([dynamicResult.cost, dynamicResult.path.join('->')])
-    } else {
+    } else if (method === 2){
+      const branchBoundResult = branchBound(data);
+      setResult([branchBoundResult.cost, branchBoundResult.path.join('->')])
     }
-
-    // setResult([`Minimal path ${algorithm(data)}`]);
-    // setTree(getTree());
   };
 
   const handleChangeMethod = (event) => {
