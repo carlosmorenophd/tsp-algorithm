@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { useMultistage } from "../code/use-multistage";
+import { useAlgorithm } from "../code/use-algorithm";
 
 const useBodyUi = ({ init }) => {
-  const { algorithm, getTree } = useMultistage();
+  const { dynamicProgramming, branchBound } = useAlgorithm();
   const [data, setData] = useState(init.data);
   const [alert, setAlert] = useState(false);
   const [result, setResult] = useState(init.result);
+  const [method, setMethod] = useState(init.method);
   const [tree, setTree] = useState({
     name: "Tree expansion",
     attributes: {
@@ -60,7 +61,6 @@ const useBodyUi = ({ init }) => {
   };
 
   const handleChangeListValue = (event) => {
-    console.log(event.target.name, event.target.valueAsNumber);
     setData((prev) =>
       prev.map((cell, cellIndex) =>
         cellIndex === parseInt(event.target.name)
@@ -88,8 +88,17 @@ const useBodyUi = ({ init }) => {
 
   //Functionality when user click en basic button
   const handleResult = () => {
-    setResult([`Minimal path ${algorithm(data)}`]);
-    setTree(getTree());
+    if (method === 1) {
+      const dynamicResult = dynamicProgramming(data);
+      setResult([dynamicResult.cost, dynamicResult.path.join('->')])
+    } else if (method === 2){
+      const branchBoundResult = branchBound(data);
+      setResult([branchBoundResult.cost, branchBoundResult.path.join('->')])
+    }
+  };
+
+  const handleChangeMethod = (event) => {
+    setMethod(event.target.value);
   };
 
   return {
@@ -97,10 +106,12 @@ const useBodyUi = ({ init }) => {
     data,
     result,
     tree,
+    method,
 
     handleAlertClose,
     handleChangeListValue,
     handleChangeMatrixValue,
+    handleChangeMethod,
     handleListAdd,
     handleListRemove,
     handleMatrixAdd,
