@@ -2,7 +2,6 @@ import { Alert, Box, Button, Snackbar, Typography } from "@mui/material";
 import RouteIcon from "@mui/icons-material/Route";
 import MatrixData from "./MatrixData";
 import React from "react";
-import Tree from "react-d3-tree";
 import useBodyUi from "./use-bodyUi";
 import { ListResult } from "./ListResult";
 import Parameter from "./ParameterList";
@@ -13,7 +12,6 @@ const BodyUi = (props) => {
     data,
     method,
     result,
-    tree,
 
     handleAlertClose,
     handleChangeMatrixValue,
