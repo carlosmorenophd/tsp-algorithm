@@ -47,7 +47,53 @@ const useAlgorithm = () => {
     return path;
   };
 
+  const branchBound = (graph) => {
+    const result = branchBoundImplementation({ graph });
+    return result;
+  };
+
+  const branchBoundImplementation = ({ graph }) => {
+    const n = graph.length;
+    let minCost = Infinity;
+    let bestPath = [];
+    const visited = Array(n).fill(false);
+    visited[0] = true;
+
+
+    function findPath(currVertex, count, currCost, path) {
+      if (count === n && graph[currVertex][0] > 0) {
+        currCost += graph[currVertex][0];
+        if (currCost < minCost) {
+          minCost = currCost;
+          bestPath = path.slice();
+        }
+        return;
+      }
+
+      for (let nextVertex = 0; nextVertex < n; nextVertex++) {
+        if (!visited[nextVertex] && graph[currVertex][nextVertex] > 0) {
+          visited[nextVertex] = true;
+          path.push(nextVertex);
+
+          findPath(
+            nextVertex,
+            count + 1,
+            currCost + graph[currVertex][nextVertex],
+            path
+          );
+
+          visited[nextVertex] = false;
+          path.pop();
+        }
+      }
+    }
+    findPath(0, 1, 0, [0]);
+    bestPath.push(0);
+    return { cost: minCost, path: bestPath };
+  };
+
   return {
+    branchBound,
     dynamicProgramming,
   };
 };
